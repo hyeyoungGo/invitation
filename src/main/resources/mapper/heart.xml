@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.api.invitation.dao.HeartDAO">
+
+	<!-- 좋아요 조회 -->
+    <select id="getHeartCount" resultType="com.api.invitation.model.Heart">
+		SELECT heart AS heart_count, target FROM heartCount;
+	</select>
+
+	<!-- 좋아요 update -->
+	<update id="upHeart"  parameterType="string">
+	<![CDATA[
+		UPDATE
+		    heartCount
+		    SET	heart = heartCount.heart + 1
+		WHERE target = #{target}
+	]]>
+	</update>
+</mapper>
