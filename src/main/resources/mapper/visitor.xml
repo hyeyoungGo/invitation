@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.api.invitation.dao.VisitorDAO">
+
+	<!-- 방문자수 조회 -->
+    <select id="getVisitorCount" resultType="com.api.invitation.model.Visitor">
+		select visit_count,
+			   (select SUM(visit_count) from visitor) AS total_count
+			from visitor
+		where visit_date = current_date;
+	</select>
+
+	<!-- 방문자수 update -->
+	<update id="upVisitor">
+	<![CDATA[
+		INSERT
+			INTO visitor (visit_date, visit_count)
+			VALUES ( current_date, 1)
+		ON duplicate KEY UPDATE visit_count = visitor.visit_count + 1
+	]]>
+	</update>
+</mapper>
